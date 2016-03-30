@@ -15,4 +15,10 @@ class Entity < ActiveRecord::Base
   def tag_names
     tags.pluck(:name)
   end
+
+  def as_json(options = {})
+    j = super(options)
+    j[:tags] = tag_names
+    j
+  end
 end

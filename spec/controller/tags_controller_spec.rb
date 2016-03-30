@@ -82,4 +82,30 @@ describe TagsController, :type => :controller do
       expect(Entity.count).to eq 0
     end
   end
+
+  describe "stats" do
+
+    describe "GET /stats" do
+
+      it "returns stats of all tags" do
+        @entity2 = Entity.create(entity_type: "article", entity_id: "1001-1001")
+        ["hat", "cat"].each { |tag| @entity2.tags << Tag.create(name: tag) }
+
+        get :stats, {}, accept_json
+        body = JSON.parse(response.body)
+
+        expect(body).not_to be_nil
+        expect(body.keys.count).to eq 3
+
+        expect(body.has_key?("hat")).to be_truthy
+        expect(body["hat"]).to eq 2
+
+        expect(body.has_key?("fish")).to be_truthy
+        expect(body["fish"]).to eq 1
+
+        expect(body.has_key?("cat")).to be_truthy
+        expect(body["cat"]).to eq 1
+      end
+    end
+  end
 end

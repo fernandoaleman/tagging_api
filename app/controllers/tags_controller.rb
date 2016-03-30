@@ -41,6 +41,10 @@ class TagsController < ApplicationController
     render json: {}, status: :no_content
   end
 
+  def stats
+    render json: Tag.stats.to_json, status: :ok
+  end
+
 	private
 
 	def	find_entity
