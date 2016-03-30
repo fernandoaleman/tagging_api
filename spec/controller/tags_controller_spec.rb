@@ -72,4 +72,14 @@ describe TagsController, :type => :controller do
       end
     end
   end
+
+  describe "DELETE /tags/:entity_type/:entity_id" do
+    it "deletes an entity" do
+
+      delete :destroy, tag_params, accept_json
+
+      expect(response.status).to be 204
+      expect(Entity.count).to eq 0
+    end
+  end
 end

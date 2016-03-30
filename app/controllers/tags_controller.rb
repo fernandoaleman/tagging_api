@@ -36,6 +36,11 @@ class TagsController < ApplicationController
     end
   end
 
+  def destroy
+    @entity.destroy if @entity
+    render json: {}, status: :no_content
+  end
+
 	private
 
 	def	find_entity
