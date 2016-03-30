@@ -30,7 +30,7 @@ describe TagsController, :type => :controller do
         expect(Entity.first.entity_type).to eq tag_params[:entity_type]
         expect(Entity.first.entity_id).to eq tag_params[:entity_id]
         expect(Entity.first.tags.count).to eq 2
-        expect(Entity.first.tag_names).to eq tag_params[:tags]
+        expect(Entity.first.tag_names.sort).to eq tag_params[:tags].sort
       end
     end
 
