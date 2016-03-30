@@ -43,4 +43,33 @@ describe TagsController, :type => :controller do
       end
     end
   end
+
+  describe "GET /tags/:entity_type/:entity_id" do
+    context "when entity exists" do
+      it "returns requested entity" do
+
+        get :show, tag_params, accept_json
+				body = JSON.parse(response.body)
+
+        expect(response.status).to be 200
+				expect(body["entity_type"]).to eq @entity.entity_type
+				expect(body["entity_id"]).to eq @entity.entity_id
+      end
+    end
+
+    context "when entity does not exist" do
+      it "returns entity not found" do
+				tag_params = {
+					entity_type: 'invalid',
+					entity_id: 'does-not-exist'
+				}
+
+        get :show, tag_params, accept_json
+        body = JSON.parse(response.body)
+
+        expect(response.status).to be 404
+        expect(body["error"]).to eq "Entity not found"
+      end
+    end
+  end
 end

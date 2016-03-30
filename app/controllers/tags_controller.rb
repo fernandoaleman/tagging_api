@@ -28,6 +28,14 @@ class TagsController < ApplicationController
     render json: @entity.to_json, status: :created
   end
 
+  def show
+    if @entity
+      render json: @entity.to_json, status: :ok
+    else
+      render json: { error: "Entity not found"}, status: :not_found
+    end
+  end
+
 	private
 
 	def	find_entity
