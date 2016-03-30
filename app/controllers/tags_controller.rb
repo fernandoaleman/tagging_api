@@ -42,7 +42,13 @@ class TagsController < ApplicationController
   end
 
   def stats
-    render json: Tag.stats.to_json, status: :ok
+    if @entity
+      render json: @entity.to_json, status: :ok
+    elsif tags_params[:entity_type] || tags_params[:entity_id]
+      render json: { error: "Stats not found" }, status: :not_found
+    else
+      render json: Tag.stats.to_json, status: :ok
+    end
   end
 
 	private

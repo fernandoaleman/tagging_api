@@ -107,5 +107,18 @@ describe TagsController, :type => :controller do
         expect(body["cat"]).to eq 1
       end
     end
+
+    describe "GET /stats/:entity_type/:entity_id" do
+      it "returns stats of an entity" do
+
+        get :stats, tag_params, accept_json
+				body = JSON.parse(response.body)
+
+        expect(response.status).to be 200
+				expect(body["entity_type"]).to eq @entity.entity_type
+				expect(body["entity_id"]).to eq @entity.entity_id
+        expect(body["tags"].count).to eq 2
+      end
+    end
   end
 end
